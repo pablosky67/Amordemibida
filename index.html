@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi niña chiquita 💚</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', Times, serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Fondo universo con un verde un toque más claro y brillante en el centro */
+            background: radial-gradient(circle at center, #1a5c38 0%, #0a2917 65%, #020a05 100%);
+            color: #1a2e22;
+            overflow-x: hidden;
+            position: relative;
+            padding: 30px;
+        }
+
+        /* Estrellas cafés hechas un poco más grandes y notables */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle, #7a4d26 2.5px, transparent 3px),
+                radial-gradient(circle, #5c3718 3px, transparent 3.5px),
+                radial-gradient(circle, #a87448 2px, transparent 2.5px);
+            background-size: 160px 160px, 220px 220px, 130px 130px;
+            background-position: 0 0, 45px 75px, 80px 40px;
+            opacity: 0.75; /* Un toque más de opacidad para que se distingan mejor */
+            z-index: 1;
+        }
+
+        /* Contenedor Principal estilo Álbum de Gala */
+        .container {
+            display: flex;
+            max-width: 1150px;
+            width: 100%;
+            background: #113320;
+            border: 4px double #c5a059;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(0,0,0,0.6);
+            z-index: 2;
+            position: relative;
+        }
+
+        /* Esquineros dorados del contenedor */
+        .container::before, .container::after {
+            content: "✦";
+            position: absolute;
+            color: #c5a059;
+            font-size: 1.5rem;
+            text-shadow: 0 0 5px rgba(197, 160, 89, 0.5);
+            z-index: 5;
+        }
+        .container::before { top: 10px; left: 15px; }
+        .container::after { bottom: 10px; right: 15px; }
+
+        /* Lado Izquierdo: Pergamino de textos */
+        .content-side {
+            flex: 1.2;
+            background: #fbf5e6; 
+            background-image: radial-gradient(rgba(0,0,0,0.03) 1px, transparent 0);
+            background-size: 24px 24px;
+            padding: 45px;
+            display: flex;
+            flex-direction: column;
+            border-right: 3px solid #c5a059;
+            box-shadow: inset -10px 0 20px rgba(0,0,0,0.1);
+        }
+
+        /* Menú de Pestañas Formales */
+        .tabs-menu {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #dcd1b4;
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: #4a5d4e;
+            padding: 10px 18px;
+            font-family: 'Georgia', serif;
+            font-size: 0.95rem;
+            font-style: italic;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            color: #8c6227;
+        }
+
+        .tab-btn.active {
+            color: #8c6227;
+            font-weight: bold;
+            border: 1px solid #c5a059;
+            border-bottom: 1px solid #fbf5e6;
+            background: #fbf5e6;
+            margin-bottom: -11px;
+            border-radius: 6px 6px 0 0;
+        }
+
+        /* Contenedor de cartas */
+        .messages-container {
+            flex: 1;
+            position: relative;
+        }
+
+        .message-section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            transform: translateX(-15px);
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .message-section.active {
+            position: relative;
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        h2 {
+            color: #1c3d27;
+            font-size: 2.1rem;
+            margin-bottom: 20px;
+            font-weight: normal;
+            border-bottom: 1px dashed #c5a059;
+            padding-bottom: 8px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #2b3a30;
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        .highlight {
+            font-weight: bold;
+            font-style: italic;
+            color: #8c6227; 
+            border-bottom: 1px solid rgba(140, 98, 39, 0.2);
+        }
+
+        /* Lado Derecho: Espacio galáctico con el Marco de la Foto */
+        .photo-side {
+            flex: 0.9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            background: transparent;
+            position: relative;
+        }
+
+        /* El Marco Detallado y Elegante */
+        .frame-container {
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 4 / 5;
+            padding: 22px;
+            background: #0d2618;
+            border: 12px solid #9e7f45;
+            border-image: linear-gradient(to bottom right, #c5a059 0%, #8c6227 50%, #c5a059 100%) 12;
+            outline: 2px solid #57401c;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.7), 
+                inset 0 0 20px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .frame-container::before {
+            content: "";
+            position: absolute;
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
+            border: 1px solid rgba(197, 160, 89, 0.4);
+            pointer-events: none;
+        }
+
+        .frame-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 2px solid #57401c;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column-reverse;
+            }
+            .content-side {
+                border-right: none;
+                border-top: 3px solid #c5a059;
+                padding: 30px 20px;
+            }
+            .photo-side {
+                padding: 30px;
+            }
+            .frame-container {
+                max-width: 320px;
+            }
+            .tab-btn.active {
+                margin-bottom: 0;
+                border-bottom: 1px solid #c5a059;
+                border-radius: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Contenido y Secciones (Izquierda) -->
+        <div class="content-side">
+            
+            <!-- Botones para navegar -->
+            <div class="tabs-menu">
+                <button class="tab-btn active" onclick="openSection(event, 'seccion1')">Mi Amor Eterno</button>
+                <button class="tab-btn" onclick="openSection(event, 'seccion2')">Nuestro Futuro Juntos</button>
+                <button class="tab-btn" onclick="openSection(event, 'seccion3')">Mi Universo & Ojos</button>
+                <button class="tab-btn" onclick="openSection(event, 'seccion4')">Cada Segundo a tu Lado</button>
+            </div>
+
+            <!-- Contenedor de las secciones de texto -->
+            <div class="messages-container">
+                
+                <!-- Sección 1 -->
+                <div id="seccion1" class="message-section active">
+                    <h2>Para el amor de mi vida ✨</h2>
+                    <p>Quiero aprovechar este espacio secreto para recordarte hoy, mañana y cada uno de mis días, que <strong>te amo muchísimo</strong>. No existen palabras exactas en ningún idioma que alcancen a explicar lo que provocas en mí desde que entraste a mi vida, pero quiero intentarlo siempre.</p>
+                    <p>Eres, sin duda alguna, la mujer de mi vida, mi niña chiquita y lo más valioso que tengo el privilegio de cuidar y amar en este mundo entero. Encontrarte ha sido el regalo más hermoso, y no hay un solo instante en el que no me sientan la persona más afortunada por tenerte a mi lado, por escuchar tu risa y por compartir contigo nuestra historia.</p>
+                    <p>No importa qué pase afuera, ni qué tan caótico se vuelva el mundo; cuando estoy contigo todo encuentra su lugar. Eres mi paz, mi alegría y mi refugio favorito.</p>
+                </div>
+
+                <!-- Sección 2 -->
+                <div id="seccion2" class="message-section">
+                    <h2>Por ti y por nosotros 🏠</h2>
+                    <p>Quiero que sepas, desde lo más profundo de mi corazón, que todo el esfuerzo que hago día con día, y absolutamente todas las ganas que le echo a cada cosa que hago, son completamente por ti y por nosotros.</p>
+                    <p>Cada meta que me propongo, cada desvelada, cada paso adelante y cada gramo de energía que invierto en mi crecimiento tiene un propósito claro: construir un camino firme donde podamos caminar de la mano sin miedo a nada. Trabajo duro hoy porque sueño con el día en que miremos atrás y veamos que valió la pena cada segundo.</p>
+                    <p>Mi mayor anhelo es que en el futuro logremos tener esa hermosa familia con la que soñamos, una vida súper estable, segura, y un hogar lleno de tranquilidad y momentos lindos. Eres mi motor y la razón por la cual jamás me voy a rendir.</p>
+                </div>
+
+                <!-- Sección 3 -->
+                <div id="seccion3" class="message-section">
+                    <h2>Tus ojos, mi destino 👁️💚</h2>
+                    <p>Le di vueltas en mi mente a cómo debía verse este rinconcito nuestro, y por eso elegí estos colores tan especiales. Quería plasmar de forma visual algo que tú y yo entendemos perfectamente.</p>
+                    <p>Este fondo no es una galaxia cualquiera: <span class="highlight">el verde profundo que ves representa tu mirada, que se ha convertido en mi universo entero</span>, ese espacio inmenso lleno de vida y magia donde me encanta perderme. Y cada una de estas <span class="highlight">pequeñas estrellas cafés simulan mis propios ojos, que brillan únicamente porque viven reflejados en los tuyos</span>, cuidándote en la distancia y quedándose a habitar ahí para siempre.</p>
+                    <p>Gracias por ser mi principio y mi fin, por ser mi hermosa realidad y por dejarme formar parte de tus ojos y de tu vida. Te amo con todo mi ser.</p>
+                </div>
+
+                <!-- Sección 4 -->
+                <div id="seccion4" class="message-section">
+                    <h2>Cada segundo a tu lado ⏳💞</h2>
+                    <p>Hoy cumplimos exactamente <strong>2 meses y 9 días juntos</strong>, y de verdad no te imaginas lo increíblemente feliz que soy por llevar este tiempo compartiendo mi vida contigo. Parece increíble cómo en tan solo un par de meses te has convertido en absolutamente todo para mí.</p>
+                    <p>Tengo la completa certeza de que esto es solo el inicio y de que vamos a lograr estar muchísimo más tiempo juntos, superando cualquier obstacle que se ponga en el camino. No importa lo que venga, ni las tormentas que tengamos que enfrentar: quiero que te grabes muy bien en el corazón que <strong>pase lo que pase, yo jamás te dejaré de amar</strong>.</p>
+                    <p>Eres el amor de mi vida, mi presente más bonito y el único futuro que quiero escribir. Gracias por este tiempo tan maravilloso, mi niña linda.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Foto con Marco Dorado de Gala (Derecha) -->
+        <div class="photo-side">
+            <div class="frame-container">
+                <!-- REEMPLAZA "tu-foto.jpg" POR EL NOMBRE O LINK DE TU IMAGEN -->
+                <img src="tu-foto.jpg" alt="Regina y Yo">
+            </div>
+        </div>
+    </div>
+
+    <!-- Script lógico para el cambio de secciones -->
+    <script>
+        function openSection(evt, sectionId) {
+            const sections = document.querySelectorAll('.message-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(sectionId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
